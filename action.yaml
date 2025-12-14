@@ -1,6 +1,9 @@
 ---
 name: "Actionlint Setup"
 description: "Installs actionlint for use by other actions."
+branding:
+  icon: "package"
+  color: "blue"
 inputs:
   version:
     description: "The version to install"
