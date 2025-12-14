@@ -1,0 +1,45 @@
+---
+name: Test
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+jobs:
+  actionlint-setup:
+    name: Actionlint Setup - Default
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ github.head_ref }}
+          fetch-depth: 1
+      - name: Actionlint Setup
+        uses: ./
+      - name: Test
+        run: |-
+          actionlint --version
+  actionlint-setup-version:
+    name: Actionlint Setup - 1.7.0
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ github.head_ref }}
+          fetch-depth: 1
+      - name: Actionlint Setup
+        uses: ./
+        with:
+          version: "1.7.0"
+      - name: Test
+        run: |-
+          actionlint --version
+          INSTALLED_VERSION=$(actionlint --version | grep -oE -m 1 '[0-9]+\.[0-9]+\.[0-9]+')
+          EXPECTED_VERSION="1.7.0"
+          if [ "$INSTALLED_VERSION" != "$EXPECTED_VERSION" ]; then
+            echo "::error::Version mismatch! Expected $EXPECTED_VERSION but got $INSTALLED_VERSION"
+            exit 1
+          fi
+          echo "✓ Version $INSTALLED_VERSION matches expected version $EXPECTED_VERSION"

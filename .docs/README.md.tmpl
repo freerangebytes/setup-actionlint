@@ -1,29 +1,11 @@
+{{- $action := datasource "action" -}}
 <!-- This file is generated. Do not edit directly. See .docs/README.md for details. -->
 
-# Actionlint Setup
+# {{ $action.name }}
 
-Installs actionlint for use by other actions.
+{{ $action.description }}
 
-## Usage
-
-```yaml
-- uses: freerangebytes/setup-actionlint@v0.1.0
-  with:
-    # The version to install
-    version: "1.7.9"
-```
-
-## Inputs
-
-| Name | Description | Required | Default |
-| ---- | ----------- | -------- | ------- |
-| `version` | The version to install | `true` | `1.7.9` |
-
-## Outputs
-
-| Name | Description |
-| ---- | ----------- |
-| `version` | The version of actionlint installed |
+{{ template "action" $action }}
 
 ## Contributing
 
