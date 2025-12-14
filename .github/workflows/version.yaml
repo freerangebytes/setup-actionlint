@@ -77,10 +77,12 @@ jobs:
           CURRENT: ${{ needs.calculateVersion.outputs.current }}
           VERSION: ${{ needs.calculateVersion.outputs.version }}
         run: |
-          echo "## Release Summary" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "**Previous version:** $CURRENT" >> $GITHUB_STEP_SUMMARY
-          echo "**New version:** $VERSION" >> $GITHUB_STEP_SUMMARY
+          {
+            echo "## Release Summary"
+            echo ""
+            echo "**Previous version:** $CURRENT"
+            echo "**New version:** $VERSION"
+          } >> "$GITHUB_STEP_SUMMARY"
 
   no-release:
     name: No Release
@@ -90,9 +92,11 @@ jobs:
     steps:
       - name: Write summary
         run: |
-          echo "## No Release" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "No version bump triggered. Use conventional commits:" >> $GITHUB_STEP_SUMMARY
-          echo "- \`fix:\` → patch" >> $GITHUB_STEP_SUMMARY
-          echo "- \`feat:\` → minor" >> $GITHUB_STEP_SUMMARY
-          echo "- \`feat!:\` or \`BREAKING CHANGE:\` → major" >> $GITHUB_STEP_SUMMARY
+          {
+            echo "## No Release"
+            echo ""
+            echo "No version bump triggered. Use conventional commits:"
+            echo "- \`fix:\` → patch"
+            echo "- \`feat:\` → minor"
+            echo "- \`feat!:\` or \`BREAKING CHANGE:\` → major"
+          } >> "$GITHUB_STEP_SUMMARY"
