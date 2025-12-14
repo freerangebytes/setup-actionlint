@@ -76,13 +76,45 @@ jobs:
             const version = process.env['VERSION'];
             core.info(`Creating release: ${version}`);
 
-            await github.rest.repos.createRelease({
+            // Get repository node ID for GraphQL
+            const { repository } = await github.graphql(`
+              query($owner: String!, $name: String!) {
+                repository(owner: $owner, name: $name) {
+                  id
+                }
+              }
+            `, {
               owner: context.repo.owner,
-              repo: context.repo.repo,
-              tag_name: version,
-              name: version,
-              generate_release_notes: true
+              name: context.repo.repo
             });
+
+            core.info(`Repository ID: ${repository.id}`);
+
+            // Create release with marketplace publishing via GraphQL
+            const result = await github.graphql(`
+              mutation($input: CreateReleaseInput!) {
+                createRelease(input: $input) {
+                  release {
+                    id
+                    url
+                    tagName
+                  }
+                }
+              }
+            `, {
+              input: {
+                repositoryId: repository.id,
+                tagName: version,
+                name: version,
+                generateReleaseNotes: true,
+                draft: false,
+                prerelease: false,
+                makeLatest: "LEGACY",
+                publishToMarketplace: true
+              }
+            });
+
+            core.info(`Release created: ${result.createRelease.release.url}`);
 
   summary:
     name: Write summary
@@ -99,6 +131,8 @@ jobs:
             echo ""
             echo "**Previous version:** $CURRENT"
             echo "**New version:** $VERSION"
+            echo ""
+            echo "✅ Published to GitHub Actions Marketplace"
           } >> "$GITHUB_STEP_SUMMARY"
 
   no-release:
