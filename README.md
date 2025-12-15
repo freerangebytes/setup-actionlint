@@ -4,6 +4,13 @@
 
 Installs actionlint for use by other actions.
 
+## Why Use This Action?
+
+- **Multi-architecture support** – Automatically detects and downloads the correct binary for your runner's architecture (x86, x64, ARM, ARM64)
+- **Immutable releases** – Downloads directly from [actionlint's official GitHub releases](https://github.com/rhysd/actionlint/releases), ensuring you get authentic, unmodified binaries
+- **Version pinning** – Specify exact versions for reproducible CI builds, avoiding unexpected changes from floating tags
+- **Lightweight and focused** – Does one thing well: installs actionlint and gets out of your way
+
 ## Usage
 
 ```yaml
