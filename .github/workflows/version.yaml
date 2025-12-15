@@ -20,10 +20,7 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Install svu
-        run: |
-          curl -sfL https://github.com/caarlos0/svu/releases/download/v3.2.3/svu_3.2.3_linux_amd64.tar.gz | tar xz
-          sudo mv svu /usr/local/bin/
+      - uses: freerangebytes/setup-svu@v0.2.0
 
       - name: Calculate next version
         id: version
