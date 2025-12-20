@@ -47,7 +47,6 @@ jobs:
     name: Create Tag and Release
     runs-on: ubuntu-latest
     needs: calculateVersion
-    if: needs.calculateVersion.outputs.skip != 'true'
     permissions:
       contents: write
     steps:
