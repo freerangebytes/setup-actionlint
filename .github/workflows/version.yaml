@@ -34,14 +34,7 @@ jobs:
           echo "Current: $CURRENT"
           echo "Next: $NEXT"
           echo "current=$CURRENT" >> "$GITHUB_OUTPUT"
-
-          if [ "$CURRENT" = "$NEXT" ]; then
-            echo "No version bump needed"
-            echo "skip=true" >> "$GITHUB_OUTPUT"
-          else
-            echo "version=$NEXT" >> "$GITHUB_OUTPUT"
-            echo "skip=false" >> "$GITHUB_OUTPUT"
-          fi
+          echo "version=$NEXT" >> "$GITHUB_OUTPUT"
 
   tag:
     name: Create Tag and Release
